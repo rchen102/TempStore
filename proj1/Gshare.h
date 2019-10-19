@@ -28,6 +28,25 @@ public:
 	int getCorrect();
 };
 
+class GshareSet {
+private:
+	Gshare * p5_3;
+	Gshare * p5_4;
+	Gshare * p5_5;
+	Gshare * p5_6;
+	Gshare * p5_7;
+	Gshare * p5_8;
+	Gshare * p5_9;
+	Gshare * p5_10;
+	Gshare * p5_11;
+
+public:
+	GshareSet();
+	~GshareSet();
+	void processOne(unsigned long long addr, string behavior);
+	void printRes();
+};
+
 
 #endif
 

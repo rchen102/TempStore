@@ -1,5 +1,4 @@
 #include "AlNonTaken.h"
-#include <string>
 
 void AlNonTaken::processOne(string behavior) {
 	this->num++;

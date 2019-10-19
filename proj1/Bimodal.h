@@ -20,13 +20,30 @@ private:
 
 public:
 	Bimodal(int bit, int tableEntry);
-	~Bimodal() {delete this->table;};
+	~Bimodal() {delete[] this->table;};
 
 	string processOne(unsigned long long addr, string behavior);
 	string predictAndUpdateTableAt(unsigned long long idx, string behavior);
 	void updateTable(unsigned long long idx, int addNum);
 	int getNum();
 	int getCorrect();
+};
+
+class BimodalSet {
+private:
+	Bimodal * p_16;
+	Bimodal * p_32;
+	Bimodal * p_128;
+	Bimodal * p_256;
+	Bimodal * p_512;
+	Bimodal * p_1024;
+	Bimodal * p_2048;
+
+public:
+	BimodalSet(int bit);
+	~BimodalSet();
+	void processOne(unsigned long long addr, string behavior);
+	void printRes();
 };
 
 

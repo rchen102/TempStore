@@ -1,5 +1,4 @@
 #include "AlTaken.h"
-#include <string>
 
 void AlTaken::processOne(string behavior) {
 	this->num++;
