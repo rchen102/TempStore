@@ -13,7 +13,7 @@ private:
 	int correct = 0;
 
 	int max; 
-	int mid; // [0,mid): Taken; [mid, max): Not Taken
+	int mid; // [0,mid): Taken; [mid, max]: Not Taken
 
 	int tableEntry; // Number of table entry, like 16, 32, 128
 	int * table;    // Branch history table, 0: Taken, 1: Not Taken
@@ -23,6 +23,7 @@ public:
 	~Bimodal() {delete this->table;};
 
 	string processOne(unsigned long long addr, string behavior);
+	string predictAndUpdateTableAt(unsigned long long idx, string behavior);
 	void updateTable(unsigned long long idx, int addNum);
 	int getNum();
 	int getCorrect();

@@ -1,6 +1,5 @@
 #include "Bimodal.h"
 #include <string>
-#include <iostream>
 
 Bimodal::Bimodal(int bit, int tableEntry) {
 	this->max = (1 << bit) - 1;
@@ -8,34 +7,34 @@ Bimodal::Bimodal(int bit, int tableEntry) {
 
 	this->tableEntry = tableEntry;
 	this->table = new int[tableEntry]();
-
-	// cout << "max: " << this->max << endl;
-	// cout << "mid: " << this->mid << endl;
 }
 
 string Bimodal::processOne(unsigned long long addr, string behavior) {
-	this->num++;
 	// Calculate index
 	unsigned long long mask = this->tableEntry - 1;
 	addr = addr & mask;
 
+	return this->predictAndUpdateTableAt(addr, behavior);
+}
+
+string Bimodal::predictAndUpdateTableAt(unsigned long long idx, string behavior) {
+	this->num++;
 	// Do prediction
 	string predict = "NT";
-	if(this->table[addr] < this->mid) predict = "T";
+	if(this->table[idx] < this->mid) predict = "T";
 
 	// Do update
 	if (behavior.compare(predict) == 0) {
 		// Prediction is correct
 		this->correct++;
-		if (predict.compare("T") == 0) this->updateTable(addr, -1);
-		else this->updateTable(addr, 1);
+		if (predict.compare("T") == 0) this->updateTable(idx, -1);
+		else this->updateTable(idx, 1);
 	} 
 	else {
 		// Prediction is wrong
-		if (predict.compare("T") == 0) this->updateTable(addr, 1);
-		else this->updateTable(addr, -1);
+		if (predict.compare("T") == 0) this->updateTable(idx, 1);
+		else this->updateTable(idx, -1);
 	}
-
 	return predict;
 }
 
