@@ -3,8 +3,9 @@
 
 /****** Gshare ******/
 
-Gshare::Gshare(int bit) {
-	this->p = new Bimodal(2, 2048);
+Gshare::Gshare(int bit, int tableEntry) {
+	this->tableEntry = tableEntry;
+	this->p = new Bimodal(2, this->tableEntry);
 	this->maskForHis = (1 << bit) - 1;
 }
 
@@ -39,15 +40,15 @@ int Gshare::getCorrect() {
 /****** GshareSet ******/
 
 GshareSet::GshareSet() {
-	this->p5_3 = new Gshare(3);
-	this->p5_4 = new Gshare(4);
-	this->p5_5 = new Gshare(5);
-	this->p5_6 = new Gshare(6);
-	this->p5_7 = new Gshare(7);
-	this->p5_8 = new Gshare(8);
-	this->p5_9 = new Gshare(9);
-	this->p5_10 = new Gshare(10);
-	this->p5_11 = new Gshare(11);
+	this->p5_3 = new Gshare(3, 2048);
+	this->p5_4 = new Gshare(4, 2048);
+	this->p5_5 = new Gshare(5, 2048);
+	this->p5_6 = new Gshare(6, 2048);
+	this->p5_7 = new Gshare(7, 2048);
+	this->p5_8 = new Gshare(8, 2048);
+	this->p5_9 = new Gshare(9, 2048);
+	this->p5_10 = new Gshare(10, 2048);
+	this->p5_11 = new Gshare(11, 2048);
 }
 
 GshareSet::~GshareSet() {
@@ -74,8 +75,8 @@ void GshareSet::processOne(unsigned long long addr, string behavior) {
 	this->p5_11->processOne(addr, behavior);
 }
 
-void GshareSet::printRes() {
-	std::cout << this->p5_3->getCorrect() << "," << this->p5_3->getNum() << "; "
+void GshareSet::writeRes(ofstream &outfile) {
+	outfile << this->p5_3->getCorrect() << "," << this->p5_3->getNum() << "; "
 	 << this->p5_4->getCorrect() << "," << this->p5_4->getNum() << "; "
 	 << this->p5_5->getCorrect() << "," << this->p5_5->getNum() << "; "
 	 << this->p5_6->getCorrect() << "," << this->p5_6->getNum() << "; "
@@ -83,6 +84,6 @@ void GshareSet::printRes() {
 	 << this->p5_8->getCorrect() << "," << this->p5_8->getNum() << "; "
 	 << this->p5_9->getCorrect() << "," << this->p5_9->getNum() << "; "
 	 << this->p5_10->getCorrect() << "," << this->p5_10->getNum() << "; "
-	 << this->p5_11->getCorrect() << "," << this->p5_11->getNum() << "; " << std::endl;
+	 << this->p5_11->getCorrect() << "," << this->p5_11->getNum() << ";" << std::endl;
 }
 

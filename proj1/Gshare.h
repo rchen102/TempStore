@@ -2,6 +2,7 @@
 #define _GSHARE_H_
 
 #include <string>
+#include <fstream>
 #include "Bimodal.h"
 
 using namespace std;
@@ -11,13 +12,13 @@ class Gshare
 {
 private:
 	Bimodal * p;
-	int tableEntry = 2048;
+	int tableEntry;
 
 	int history = 0;
 	int maskForHis; // mask for history bit
 
 public:
-	Gshare(int bit);
+	Gshare(int bit, int tableEntry);
 	~Gshare() {delete this->p;};
 
 	string processOne(unsigned long long addr, string behavior);
@@ -44,7 +45,7 @@ public:
 	GshareSet();
 	~GshareSet();
 	void processOne(unsigned long long addr, string behavior);
-	void printRes();
+	void writeRes(ofstream &outfile);
 };
 
 

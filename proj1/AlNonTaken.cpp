@@ -1,8 +1,9 @@
 #include "AlNonTaken.h"
 
-void AlNonTaken::processOne(string behavior) {
+string AlNonTaken::processOne(string behavior) {
 	this->num++;
 	if (behavior.compare("NT") == 0) this->correct++;
+	return "NT";
 }
 
 int AlNonTaken::getNum() {
@@ -12,4 +13,3 @@ int AlNonTaken::getNum() {
 int AlNonTaken::getCorrect() {
 	return this->correct;
 }
-

@@ -12,7 +12,7 @@ private:
 	int correct = 0;
 
 public:
-	void processOne(string behavior);
+	string processOne(string behavior);
 	int getNum();
 	int getCorrect();
 };

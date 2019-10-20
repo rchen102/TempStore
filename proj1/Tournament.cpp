@@ -1,11 +1,14 @@
 #include "Tournament.h"
 
-Tournament::Tournament() {
+Tournament::Tournament(int tableEntry) {
+	this->tableEntry = tableEntry;
+	this->selector = new int[tableEntry]();
 	this->pB = new Bimodal(2, 2048);
-	this->pG = new Gshare(11);
+	this->pG = new Gshare(11, 2048);
 }
 
 Tournament::~Tournament() {
+	delete[] this->selector;
 	delete this->pB;
 	delete this->pG;
 }

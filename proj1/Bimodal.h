@@ -2,9 +2,9 @@
 #define _BIMODAL_H_
 
 #include <string>
+#include <fstream>
 
 using namespace std;
-
 
 class Bimodal
 {
@@ -43,7 +43,7 @@ public:
 	BimodalSet(int bit);
 	~BimodalSet();
 	void processOne(unsigned long long addr, string behavior);
-	void printRes();
+	void writeRes(ofstream &outfile);
 };
 
 
