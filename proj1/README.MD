@@ -1,8 +1,8 @@
 # CS320: Project 1
 ## Basic Information
-Name: Renze Chen
-BU-ID: rchen102
-B-Number: B00767193
+__Name__: Renze Chen  
+__BU-ID__: rchen102  
+__B-Number__: B00767193  
 
 ## Running
 Following are the commands and the instructions to run program
@@ -17,7 +17,7 @@ Following are the commands and the instructions to run program
    ```shell
    make run
    ```
-   Execute the command `./predictors short_trace1.txt output.txt`
+   Execute the command `./predictors short_trace1.txt output.txt`  
    For different files: goto `Makefile` and change the file name
 
 3. __Instruction to clean__
