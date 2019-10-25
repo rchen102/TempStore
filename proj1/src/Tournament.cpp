@@ -1,4 +1,4 @@
-#include "Tournament.h"
+#include "../include/Tournament.h"
 
 Tournament::Tournament(int tableEntry) {
 	this->tableEntry = tableEntry;

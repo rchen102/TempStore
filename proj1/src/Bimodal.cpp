@@ -1,4 +1,4 @@
-#include "Bimodal.h"
+#include "../include/Bimodal.h"
 #include <iostream>
 
 /****** Bimodal******/

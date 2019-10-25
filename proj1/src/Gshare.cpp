@@ -1,4 +1,4 @@
-#include "Gshare.h"
+#include "../include/Gshare.h"
 #include <iostream>
 
 /****** Gshare ******/

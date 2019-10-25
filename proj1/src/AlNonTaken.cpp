@@ -1,4 +1,4 @@
-#include "AlNonTaken.h"
+#include "../include/AlNonTaken.h"
 
 string AlNonTaken::processOne(string behavior) {
 	this->num++;

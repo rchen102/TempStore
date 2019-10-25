@@ -2,12 +2,12 @@
 #include <fstream>
 #include <string>
 
-#include "AlTaken.h"
-#include "AlNonTaken.h"
-#include "Bimodal.h"
-#include "Gshare.h"
-#include "Tournament.h"
-#include "BTB.h"
+#include "../include/AlTaken.h"
+#include "../include/AlNonTaken.h"
+#include "../include/Bimodal.h"
+#include "../include/Gshare.h"
+#include "../include/Tournament.h"
+#include "../include/BTB.h"
 
 using namespace std;
 
@@ -34,6 +34,8 @@ int main(int argc, char const *argv[])
 	ofstream outfile(argv[2]);
 	
 	while(infile >> hex >> addr >> behavior >> hex >> target) {
+		cout << 1 << endl;
+
 		p1->processOne(behavior);
 		p2->processOne(behavior);
 		p3->processOne(addr, behavior);

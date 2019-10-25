@@ -1,4 +1,4 @@
-#include "AlTaken.h"
+#include "../include/AlTaken.h"
 
 string AlTaken::processOne(string behavior) {
 	this->num++;

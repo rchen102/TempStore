@@ -1,4 +1,4 @@
-#include "BTB.h"
+#include "../include/BTB.h"
 
 BTB::BTB() {
 	this->pB = new Bimodal(1, 512);

@@ -1,44 +1,24 @@
-M=predictors
-P1=AlTaken
-P2=AlNonTaken
-P3=Bimodal
-P5=Gshare
-P6=Tournament
-P7=BTB
+INCLUDE_DIR := include
+SRC_DIR := src
+OBJ_DIR := obj
+TARGET = predictors
+
+SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+HDRS := $(wildcard $(INCLUDE_DIR)/*.h)
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
+
 CFLAGS=-g -Wall -std=c++14
 
-all: $(M)
+all: $(TARGET)
 
-$(M) : $(M).o $(P1).o $(P2).o $(P3).o $(P5).o $(P6).o $(P7).o
-	g++ $(CFLAGS) $(M).o $(P1).o $(P2).o $(P3).o $(P5).o $(P6).o $(P7).o -o $(M)
+$(TARGET): $(OBJS)
+	g++ $(CFLAGS) $(OBJS) -o $(TARGET) 
 
-$(M).o : $(M).cpp $(P1).h $(P2).h $(P3).h $(P5).h $(P6).h $(P7).h
-	g++ $(CFLAGS) -c $(M).cpp -o $(M).o
 
-$(P1).o : $(P1).cpp $(P1).h
-	g++ $(CFLAGS) -c $(P1).cpp -o $(P1).o
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HDRS)
+	@mkdir -p $(dir $@)
+	g++ $(CFLAGS) -c $< -o $@
 
-$(P2).o : $(P2).cpp $(P2).h
-	g++ $(CFLAGS) -c $(P2).cpp -o $(P2).o
-
-$(P3).o : $(P3).cpp $(P3).h
-	g++ $(CFLAGS) -c $(P3).cpp -o $(P3).o
-
-$(P5).o : $(P5).cpp $(P5).h
-	g++ $(CFLAGS) -c $(P5).cpp -o $(P5).o
-
-$(P6).o : $(P6).cpp $(P6).h
-	g++ $(CFLAGS) -c $(P6).cpp -o $(P6).o
-
-$(P7).o : $(P7).cpp $(P7).h
-	g++ $(CFLAGS) -c $(P7).cpp -o $(P7).o
-
-run: all
-	./$(M) short_trace1.txt output.txt
-
+.PHONY: clean
 clean:
-	rm -rf *.o $(M)
-
-memcheck: all
-	valgrind --leak-check=full ./$(M) test_input.txt output.txt
-
+	rm -rf $(OBJ_DIR) $(TARGET)
