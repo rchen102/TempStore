@@ -13,7 +13,6 @@ Tournament::~Tournament() {
 	delete this->pG;
 }
 
-
 void Tournament::processOne(unsigned long long addr, string behavior) {
 	this->num++;
 	string predictFromB = this->pB->processOne(addr, behavior);

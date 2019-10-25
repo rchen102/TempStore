@@ -17,7 +17,7 @@ Following are the commands and the instructions to run program
    ```shell
    make run
    ```
-   Execute the command `./predictors short_trace1.txt output.txt`  
+   Default: execute the command `./predictors short_trace1.txt output.txt`  
    For different files: goto `Makefile` and change the file name
 
 3. __Instruction to clean__

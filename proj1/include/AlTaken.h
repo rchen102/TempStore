@@ -3,7 +3,7 @@
 
 #include <string>
 
-using namespace std;
+using std::string;
 
 class AlTaken
 {
@@ -16,7 +16,6 @@ public:
 	int getNum();
 	int getCorrect();
 };
-
 
 #endif
 

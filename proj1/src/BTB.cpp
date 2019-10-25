@@ -8,7 +8,6 @@ BTB::~BTB() {
 	delete this->pB;
 }
 
-
 void BTB::processOne(unsigned long long addr, string behavior, unsigned long long target) {
 	string predictFromB = this->pB->processOne(addr, behavior);
 

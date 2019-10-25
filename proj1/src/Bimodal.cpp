@@ -1,6 +1,9 @@
 #include "../include/Bimodal.h"
 #include <iostream>
 
+using std::cout;
+using std::endl;
+
 /****** Bimodal******/
 Bimodal::Bimodal(int bit, int tableEntry) {
 	this->max = (1 << bit) - 1;
@@ -88,6 +91,16 @@ void BimodalSet::processOne(unsigned long long addr, string behavior) {
 
 void BimodalSet::writeRes(ofstream &outfile) {
 	outfile << this->p_16->getCorrect() << "," << this->p_16->getNum() << "; "
+		 << this->p_32->getCorrect() << "," << this->p_32->getNum() << "; "
+		 << this->p_128->getCorrect() << "," << this->p_128->getNum() << "; "
+		 << this->p_256->getCorrect() << "," << this->p_256->getNum() << "; "
+		 << this->p_512->getCorrect() << "," << this->p_512->getNum() << "; "
+		 << this->p_1024->getCorrect() << "," << this->p_1024->getNum() << "; "
+		 << this->p_2048->getCorrect() << "," << this->p_2048->getNum() << ";" << std::endl;
+}
+
+void BimodalSet::printRes() {
+	std::cout << this->p_16->getCorrect() << "," << this->p_16->getNum() << "; "
 		 << this->p_32->getCorrect() << "," << this->p_32->getNum() << "; "
 		 << this->p_128->getCorrect() << "," << this->p_128->getNum() << "; "
 		 << this->p_256->getCorrect() << "," << this->p_256->getNum() << "; "

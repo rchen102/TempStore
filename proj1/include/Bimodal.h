@@ -4,7 +4,8 @@
 #include <string>
 #include <fstream>
 
-using namespace std;
+using std::string;
+using std::ofstream;
 
 class Bimodal
 {
@@ -42,10 +43,11 @@ private:
 public:
 	BimodalSet(int bit);
 	~BimodalSet();
+
 	void processOne(unsigned long long addr, string behavior);
 	void writeRes(ofstream &outfile);
+	void printRes();
 };
-
 
 #endif
 

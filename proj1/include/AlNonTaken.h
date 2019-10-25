@@ -3,7 +3,7 @@
 
 #include <string>
 
-using namespace std;
+using std::string;
 
 class AlNonTaken
 {
@@ -12,11 +12,9 @@ private:
 	int correct = 0;
 
 public:
-	string processOne(string behavior);
+	string processOne(std::string behavior);
 	int getNum();
 	int getCorrect();
 };
 
-
 #endif
-

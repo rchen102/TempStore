@@ -5,8 +5,7 @@
 #include "Bimodal.h"
 #include "Gshare.h"
 
-
-using namespace std;
+using std::string;
 
 class Tournament
 {
@@ -29,7 +28,6 @@ public:
 	int getNum();
 	int getCorrect();
 };
-
 
 #endif
 

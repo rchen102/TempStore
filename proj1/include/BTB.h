@@ -5,7 +5,7 @@
 #include "Bimodal.h"
 #include "Gshare.h"
 
-using namespace std;
+using std::string;
 
 class BTB
 {
@@ -26,7 +26,6 @@ public:
 	int getAccess();
 	int getHit();
 };
-
 
 #endif
 

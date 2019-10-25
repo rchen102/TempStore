@@ -1,6 +1,9 @@
 #include "../include/Gshare.h"
 #include <iostream>
 
+using std::cout;
+using std::endl;
+
 /****** Gshare ******/
 
 Gshare::Gshare(int bit, int tableEntry) {
@@ -77,6 +80,18 @@ void GshareSet::processOne(unsigned long long addr, string behavior) {
 
 void GshareSet::writeRes(ofstream &outfile) {
 	outfile << this->p5_3->getCorrect() << "," << this->p5_3->getNum() << "; "
+	 << this->p5_4->getCorrect() << "," << this->p5_4->getNum() << "; "
+	 << this->p5_5->getCorrect() << "," << this->p5_5->getNum() << "; "
+	 << this->p5_6->getCorrect() << "," << this->p5_6->getNum() << "; "
+	 << this->p5_7->getCorrect() << "," << this->p5_7->getNum() << "; "
+	 << this->p5_8->getCorrect() << "," << this->p5_8->getNum() << "; "
+	 << this->p5_9->getCorrect() << "," << this->p5_9->getNum() << "; "
+	 << this->p5_10->getCorrect() << "," << this->p5_10->getNum() << "; "
+	 << this->p5_11->getCorrect() << "," << this->p5_11->getNum() << ";" << std::endl;
+}
+
+void GshareSet::printRes() {
+	std::cout << this->p5_3->getCorrect() << "," << this->p5_3->getNum() << "; "
 	 << this->p5_4->getCorrect() << "," << this->p5_4->getNum() << "; "
 	 << this->p5_5->getCorrect() << "," << this->p5_5->getNum() << "; "
 	 << this->p5_6->getCorrect() << "," << this->p5_6->getNum() << "; "

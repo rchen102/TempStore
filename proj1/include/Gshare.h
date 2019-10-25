@@ -5,8 +5,8 @@
 #include <fstream>
 #include "Bimodal.h"
 
-using namespace std;
-
+using std::string;
+using std::ofstream;
 
 class Gshare
 {
@@ -24,7 +24,6 @@ public:
 	string processOne(unsigned long long addr, string behavior);
 	unsigned long long computeIndex(unsigned long long addr);
 	void updateHistory(string predict);
-
 	int getNum();
 	int getCorrect();
 };
@@ -44,10 +43,11 @@ private:
 public:
 	GshareSet();
 	~GshareSet();
+
 	void processOne(unsigned long long addr, string behavior);
 	void writeRes(ofstream &outfile);
+	void printRes();
 };
-
 
 #endif
 
