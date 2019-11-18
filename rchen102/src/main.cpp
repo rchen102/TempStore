@@ -35,11 +35,13 @@ int main(int argc, char const *argv[])
 
 	cache_sim->printRes();
 
+
 	// Close file and free memory
 	infile.close();
 	outfile.close();
 	delete cache_sim;
 
 	cout << "\nAll results have been written into file '" << argv[2] << "'" << endl;
+	
 	return 0;
 }

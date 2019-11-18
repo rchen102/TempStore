@@ -25,6 +25,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(HDRS)
 run: all
 	./$(TARGET) $(INPUT) $(OUTPUT)
 
+memcheck: all
+	valgrind --track-origins=yes --leak-check=full ./$(TARGET) files/test/input.txt files/test/output.txt
+
 
 .PHONY: clean diff
 clean:
