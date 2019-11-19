@@ -4,14 +4,16 @@
 #include <string>
 // #include <fstream>
 
-#include "DirectMappedCache.h"
+#include "DirectMapped.h"
+#include "SetAssociative.h"
 
 using std::string;
 
 class CacheSimulator
 {
 private:
-	DirectMappedCacheSet * dmc;
+	DirectMappedSet * dmc;
+	SetAssociativeSet * sa;
 
 public:
 	CacheSimulator();

@@ -1,5 +1,5 @@
-#ifndef _LRU_CACHE_H_
-#define _LRU_CACHE_H_
+#ifndef _LRU_H_
+#define _LRU_H_
 
 #include <map>
 
@@ -15,9 +15,9 @@ public:
 	Node(int key);
 };
 
-class LRUcache
+class LRU
 {
-private:
+public:
 	map<int, Node*> keyNodemap;
 	Node * head;    // dummy node exist
 	Node * tail;    // head: oldest, tail: youngest
@@ -26,10 +26,10 @@ private:
 	int num;
 
 public:
-	LRUcache(int capacity);
-	~LRUcache();
+	LRU(int capacity);
+	~LRU();
 	
-	void access(int key);
+	int access(int key);  // return 1, if hit; else -1
 	void updateToTail(Node * node);
 	void insert(int key);
 	void evictOne();

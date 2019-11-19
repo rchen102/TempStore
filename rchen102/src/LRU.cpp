@@ -1,4 +1,4 @@
-#include "../include/LRUcache.h"
+#include "../include/LRU.h"
 
 #include <iostream>
 
@@ -14,15 +14,15 @@ Node::Node(int key) {
 	this->next = NULL;
 }
 
-/*******LRUcache*******/
-LRUcache::LRUcache(int capacity) {
+/*******LRU*******/
+LRU::LRU(int capacity) {
 	this->capacity = capacity;
 	this->num = 0;
 	this->head = new Node(-1); // dummy node
 	this->tail = this->head;
 }
 
-LRUcache::~LRUcache() {
+LRU::~LRU() {
 	while (this->head != NULL) {
 		Node * tmp = this->head;
 		this->head = this->head->next;
@@ -30,17 +30,19 @@ LRUcache::~LRUcache() {
 	}
 }
 
-void LRUcache::access(int key) {
+int LRU::access(int key) {
 	if (this->keyNodemap.count(key) > 0) {
 		Node * tmp = keyNodemap[key];
 		this->updateToTail(tmp);
+		return 1;
 	}
 	else {
 		this->insert(key);
+		return -1;
 	}
 }
 
-void LRUcache::updateToTail(Node * node) {
+void LRU::updateToTail(Node * node) {
 	Node * left = node->pre;
 	Node * right = node->next;
 	if (right == NULL) return;  // right is NULL, already in tail
@@ -50,10 +52,11 @@ void LRUcache::updateToTail(Node * node) {
 
 	this->tail->next = node;
 	node->pre = this->tail;
+	node->next = NULL;
 	this->tail = node;
 }
 
-void LRUcache::insert(int key) {
+void LRU::insert(int key) {
 	if (this->num < this->capacity) {
 		Node * cur = new Node(key);
 		this->keyNodemap[key] = cur;
@@ -69,7 +72,7 @@ void LRUcache::insert(int key) {
 	}
 }
 
-void LRUcache::evictOne() {
+void LRU::evictOne() {
 	if (this->num <= 0) return;
 	
 	Node * target = this->head->next;
@@ -86,7 +89,7 @@ void LRUcache::evictOne() {
 	delete target;
 }
 
-void LRUcache::show() {
+void LRU::show() {
 	Node * tmp = this->head;
 	cout << "Head";
 	for (int i = 0; i < this->num; i++) {

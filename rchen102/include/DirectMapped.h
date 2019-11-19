@@ -1,12 +1,12 @@
-#ifndef _DIRECT_MAPPED_CACHE_H_
-#define _DIRECT_MAPPED_CACHE_H_
+#ifndef _DIRECT_MAPPED_H_
+#define _DIRECT_MAPPED_H_
 
 #include <string>
 // #include <fstream>
 
 using std::string;
 
-class DirectMappedCache
+class DirectMapped
 {
 private:
 	int lineSize;   // bytes
@@ -20,8 +20,8 @@ private:
 	int * valid;
 
 public:
-	DirectMappedCache(int lineSize, int cacheSize);   // unit: (bytes, kb)
-	~DirectMappedCache();
+	DirectMapped(int lineSize, int cacheSize);   // unit: (bytes, kb)
+	~DirectMapped();
 	
 	void processOne(string behavior, unsigned long long addr);
 	int addrToLineAddr(unsigned long long addr);
@@ -31,16 +31,16 @@ public:
 };
 
 
-class DirectMappedCacheSet {
+class DirectMappedSet {
 private:
-	DirectMappedCache * dmc1;
-	DirectMappedCache * dmc2;
-	DirectMappedCache * dmc3;
-	DirectMappedCache * dmc4;
+	DirectMapped * dmc1;
+	DirectMapped * dmc2;
+	DirectMapped * dmc3;
+	DirectMapped * dmc4;
 
 public:
-	DirectMappedCacheSet();
-	~DirectMappedCacheSet();
+	DirectMappedSet();
+	~DirectMappedSet();
 
 	void processOne(string behavior, unsigned long long addr);
 

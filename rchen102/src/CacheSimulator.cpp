@@ -5,15 +5,18 @@ using std::cout;
 using std::endl;
 
 CacheSimulator::CacheSimulator() {
-	this->dmc = new DirectMappedCacheSet();
+	this->dmc = new DirectMappedSet();
+	this->sa = new SetAssociativeSet();
 }
 
 CacheSimulator::~CacheSimulator() {
 	delete this->dmc;
+	delete this->sa;
 }
 
 void CacheSimulator::processOne(string behavior, unsigned long long addr) {
 	this->dmc->processOne(behavior, addr);
+	this->sa->processOne(behavior, addr);
 }
 
 void CacheSimulator::printOne(int hit, int access) {
@@ -23,6 +26,7 @@ void CacheSimulator::printOne(int hit, int access) {
 void CacheSimulator::printRes() {
 	cout << "\nPrint results: " << endl;
 	this->dmc->printRes();
+	this->sa->printRes();
 }
 
 // void CacheSimulator::writeRes(ofstream &outfile) {
