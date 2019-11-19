@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-using std::map;
 using std::cout;
 using std::endl;
 
@@ -37,6 +36,19 @@ int LRU::access(int key) {
 		return 1;
 	}
 	else {
+		this->insert(key);
+		return -1;
+	}
+}
+
+int LRU::access(int key, string behavior) {
+	if (this->keyNodemap.count(key) > 0) {
+		Node * tmp = keyNodemap[key];
+		this->updateToTail(tmp);
+		return 1;
+	}
+	else {
+		if (behavior == "S") return -1;
 		this->insert(key);
 		return -1;
 	}

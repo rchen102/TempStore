@@ -17,6 +17,7 @@ private:
 	SetAssociativeSet * sa;
 	FullyAssociative * fa1;   // LRU
 	FullyAssociative * fa2;   // HotCold
+	SetAssociativeSet * sa1;
 
 public:
 	CacheSimulator();

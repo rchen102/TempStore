@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 
 /****** SetAssociative ******/
-SetAssociative::SetAssociative(int blockSize, int cacheSize, int associativity) {
+SetAssociative::SetAssociative(int blockSize, int cacheSize, int associativity, int mode) {
 	this->blockSize = blockSize;
 	this->cacheSize = 1024 * cacheSize;
 	this->blockNum = this->cacheSize / this->blockSize;
@@ -19,6 +19,7 @@ SetAssociative::SetAssociative(int blockSize, int cacheSize, int associativity) 
 	for (int i = 0; i < this->setNum; i++) {
 		this->cache[i] = new LRU(associativity);
 	}
+	this->mode = mode;
 }
 
 SetAssociative::~SetAssociative() {
@@ -33,7 +34,12 @@ void SetAssociative::processOne(string behavior, unsigned long long addr) {
 	int blockAddr = this->addrToBlockAddr(addr);   // transfer address to block address
 	int setNum = blockAddr % this->setNum;         // get set number from block address
 
-	if (this->cache[setNum]->access(blockAddr) == 1) this->hit++;
+	if (this->mode == 0) {
+		if (this->cache[setNum]->access(blockAddr) == 1) this->hit++;
+	}
+	else if (this->mode == 1) {
+		if (this->cache[setNum]->access(blockAddr, behavior) == 1) this->hit++;
+	}
 }
 
 int SetAssociative::addrToBlockAddr(unsigned long long addr) {
@@ -42,11 +48,11 @@ int SetAssociative::addrToBlockAddr(unsigned long long addr) {
 }
 
 /****** SetAssociativeSet ******/
-SetAssociativeSet::SetAssociativeSet() {
-	this->sa1 = new SetAssociative(32, 16, 2);
-	this->sa2 = new SetAssociative(32, 16, 4);
-	this->sa3 = new SetAssociative(32, 16, 8);
-	this->sa4 = new SetAssociative(32, 16, 16);
+SetAssociativeSet::SetAssociativeSet(int mode) {
+	this->sa1 = new SetAssociative(32, 16, 2, mode);
+	this->sa2 = new SetAssociative(32, 16, 4, mode);
+	this->sa3 = new SetAssociative(32, 16, 8, mode);
+	this->sa4 = new SetAssociative(32, 16, 16, mode);
 }
 
 SetAssociativeSet::~SetAssociativeSet() {

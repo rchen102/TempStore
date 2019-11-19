@@ -20,11 +20,13 @@ private:
 	int hit;
 	int access;
 
+	int mode;        // 0: default, 1: with no Allocation on a Write Miss
+
 	LRU ** cache;
 
 
 public:
-	SetAssociative(int blockSize, int cacheSize, int associativity);   // unit: (bytes, kb, 1)
+	SetAssociative(int blockSize, int cacheSize, int associativity, int mode);   // unit: (bytes, kb, 1)
 	~SetAssociative();
 	
 	void processOne(string behavior, unsigned long long addr);
@@ -43,7 +45,7 @@ private:
 	SetAssociative * sa4;
 
 public:
-	SetAssociativeSet();
+	SetAssociativeSet(int mode);
 	~SetAssociativeSet();
 
 	void processOne(string behavior, unsigned long long addr);
