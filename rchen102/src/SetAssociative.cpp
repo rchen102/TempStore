@@ -40,6 +40,20 @@ void SetAssociative::processOne(string behavior, unsigned long long addr) {
 	else if (this->mode == 1) {
 		if (this->cache[setNum]->access(blockAddr, behavior) == 1) this->hit++;
 	}
+	else if (this->mode == 2) {
+		int nextBlockAddr = blockAddr + 1;
+		int nextSetNum = nextBlockAddr % this->setNum;
+		if (this->cache[setNum]->access(blockAddr) == 1) this->hit++;
+		this->cache[nextSetNum]->access(nextBlockAddr);
+	}
+	else if (this->mode == 3) {
+		if (this->cache[setNum]->access(blockAddr) == 1) this->hit++;
+		else {
+			int nextBlockAddr = blockAddr + 1;
+			int nextSetNum = nextBlockAddr % this->setNum;
+			this->cache[nextSetNum]->access(nextBlockAddr);
+		}
+	}
 }
 
 int SetAssociative::addrToBlockAddr(unsigned long long addr) {

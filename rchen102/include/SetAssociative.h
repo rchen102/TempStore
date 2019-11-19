@@ -20,7 +20,7 @@ private:
 	int hit;
 	int access;
 
-	int mode;        // 0: default, 1: with no Allocation on a Write Miss
+	int mode;        // 0: default, 1: with no Allocation on a Write Miss, 2: prefetch
 
 	LRU ** cache;
 
