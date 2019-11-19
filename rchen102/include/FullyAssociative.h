@@ -5,6 +5,7 @@
 // #include <fstream>
 
 #include "LRU.h"
+#include "HotCold.h"
 
 using std::string;
 
@@ -19,11 +20,12 @@ private:
 	int hit;
 	int access;	
 
-	int mode;
+	int mode;        // 0 for LRU, 1 for HotCold
 	LRU * LRUcache;
+	HotCold * HotColdcache;
 
 public:
-	FullyAssociative(int blockSize, int cacheSize, int mode);  // mode 0 for LRU, mode 1 for hot/cold
+	FullyAssociative(int blockSize, int cacheSize, int mode);  // 0 for LRU, 1 for HotCold
 	~FullyAssociative();
 
 	void processOne(string behavior, unsigned long long addr);

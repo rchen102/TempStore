@@ -32,7 +32,6 @@ int main(int argc, char const *argv[])
 	while(infile >> behavior >> hex >> addr) {
 		cache_sim->processOne(behavior, addr);
 	}
-
 	cache_sim->printRes();
 
 	// Close file and free memory

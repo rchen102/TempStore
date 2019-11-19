@@ -16,6 +16,7 @@ private:
 	DirectMappedSet * dmc;
 	SetAssociativeSet * sa;
 	FullyAssociative * fa1;   // LRU
+	FullyAssociative * fa2;   // HotCold
 
 public:
 	CacheSimulator();

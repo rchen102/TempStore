@@ -7,19 +7,22 @@ using std::endl;
 CacheSimulator::CacheSimulator() {
 	this->dmc = new DirectMappedSet();
 	this->sa = new SetAssociativeSet();
-	this->fa1 = new FullyAssociative(32, 16, 0);   // block size 32bytes, cache size 16kb, mode 1
+	this->fa1 = new FullyAssociative(32, 16, 0);   // block size 32bytes, cache size 16kb, mode 0 (LRU)
+	this->fa2 = new FullyAssociative(32, 16, 1);   // block size 32bytes, cache size 16kb, mode 1 (HotCold)
 }
 
 CacheSimulator::~CacheSimulator() {
 	delete this->dmc;
 	delete this->sa;
 	delete this->fa1;
+	delete this->fa2;
 }
 
 void CacheSimulator::processOne(string behavior, unsigned long long addr) {
 	this->dmc->processOne(behavior, addr);
 	this->sa->processOne(behavior, addr);
 	this->fa1->processOne(behavior, addr);
+	this->fa2->processOne(behavior, addr);
 }
 
 void CacheSimulator::printOne(int hit, int access) {
@@ -31,6 +34,7 @@ void CacheSimulator::printRes() {
 	this->dmc->printRes();
 	this->sa->printRes();
 	this->printOne(this->fa1->getHit(), this->fa1->getAccess());
+	this->printOne(this->fa2->getHit(), this->fa2->getAccess());
 }
 
 // void CacheSimulator::writeRes(ofstream &outfile) {
