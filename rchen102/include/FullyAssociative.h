@@ -2,7 +2,6 @@
 #define _FULLY_ASSOCIATIVE_H_
 
 #include <string>
-// #include <fstream>
 
 #include "LRU.h"
 #include "HotCold.h"

@@ -2,13 +2,14 @@
 #define _CACHE_SIMULATOR_H_
 
 #include <string>
-// #include <fstream>
+#include <fstream>
 
 #include "DirectMapped.h"
 #include "SetAssociative.h"
 #include "FullyAssociative.h"
 
 using std::string;
+using std::ofstream;
 
 class CacheSimulator
 {
@@ -28,7 +29,7 @@ public:
 
 	void printOne(int hit, int access);
 	void printRes();
-	// void writeRes(ofstream &outfile);
+	void writeRes(ofstream &outfile);
 	
 };
 

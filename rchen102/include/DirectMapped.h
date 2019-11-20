@@ -2,9 +2,10 @@
 #define _DIRECT_MAPPED_H_
 
 #include <string>
-// #include <fstream>
+#include <fstream>
 
 using std::string;
+using std::ofstream;
 
 class DirectMapped
 {
@@ -45,6 +46,7 @@ public:
 	void processOne(string behavior, unsigned long long addr);
 
 	void printRes();
+	void writeRes(ofstream &outfile);
 };
 
 #endif

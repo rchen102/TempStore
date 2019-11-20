@@ -2,11 +2,12 @@
 #define _SET_ASSOCIATIVE_H_
 
 #include <string>
-// #include <fstream>
+#include <fstream>
 
 #include "LRU.h"
 
 using std::string;
+using std::ofstream;
 
 class SetAssociative
 {
@@ -51,6 +52,7 @@ public:
 	void processOne(string behavior, unsigned long long addr);
 
 	void printRes();
+	void writeRes(ofstream &outfile);
 };
 
 #endif

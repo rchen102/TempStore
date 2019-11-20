@@ -73,3 +73,10 @@ void DirectMappedSet::printRes() {
 		 << this->dmc3->getHit() << "," << this->dmc3->getAccess() << "; "
 		 << this->dmc4->getHit() << "," << this->dmc4->getAccess() << ";" << endl;
 }
+
+void DirectMappedSet::writeRes(ofstream &outfile) {
+	outfile << this->dmc1->getHit() << "," << this->dmc1->getAccess() << "; "
+		 << this->dmc2->getHit() << "," << this->dmc2->getAccess() << "; "
+		 << this->dmc3->getHit() << "," << this->dmc3->getAccess() << "; "
+		 << this->dmc4->getHit() << "," << this->dmc4->getAccess() << ";" << endl;	
+}

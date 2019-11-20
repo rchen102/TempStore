@@ -6,16 +6,18 @@ class HotCold
 public:
 	int capacity;
 
-	int * cache;   // the tag
-	int * tree;    // hot code tree
+	int * cache;   // store the tag (block address)
+	int * tree;    // hot/cold tree
 
 public:
 	HotCold(int capacity);
 	~HotCold();
 
+	int access(int blockAddr);               // return 1 for hit, -1 for miss
 	void updateTreeWithHit(int blockIdx);
 	void updateTreeWithMiss(int blockAddr);
-	int access(int blockAddr);   // 1 for hit, -1 for miss
+	void updateHotColdBit(int treeIdx);
+	
 };
 
 #endif

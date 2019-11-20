@@ -89,3 +89,10 @@ void SetAssociativeSet::printRes() {
 		 << this->sa3->getHit() << "," << this->sa3->getAccess() << "; "
 		 << this->sa4->getHit() << "," << this->sa4->getAccess() << ";" << endl;
 }
+
+void SetAssociativeSet::writeRes(ofstream &outfile) {
+	outfile << this->sa1->getHit() << "," << this->sa1->getAccess() << "; "
+		 << this->sa2->getHit() << "," << this->sa2->getAccess() << "; "
+		 << this->sa3->getHit() << "," << this->sa3->getAccess() << "; "
+		 << this->sa4->getHit() << "," << this->sa4->getAccess() << ";" << endl;	
+}

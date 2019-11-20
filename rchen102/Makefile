@@ -9,9 +9,10 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
 
 CFLAGS = -g -Wall -std=c++14
 
-INPUT = files/traces/trace1.txt
-OUTPUT = files/output/output.txt
-CORRECT = files/correct_outputs/trace1_output.txt
+TRACE = trace1
+INPUT = files/traces/$(TRACE).txt
+OUTPUT = files/output.txt
+CORRECT = files/correct_outputs/$(TRACE)_output.txt
 
 all: $(TARGET)
 
@@ -33,5 +34,5 @@ memcheck: all
 clean:
 	rm -rf $(OBJ_DIR) $(TARGET) $(OUTPUT)
 
-diff:
+diff: run
 	diff $(OUTPUT) $(CORRECT)

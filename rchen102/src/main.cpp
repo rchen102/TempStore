@@ -23,7 +23,7 @@ int main(int argc, char const *argv[])
 	if (!infile) {
 		cerr << "\nError Message:"<< endl;
 		cerr << "Can't find file '" << argv[1] << "'" << endl;
-		cerr << "Please check if the filename is correct or file has been placed in correct directory" << endl;
+		cerr << "Please check whether filename is correct or file under correct directory" << endl;
 		exit(0);
  	}
 
@@ -33,12 +33,13 @@ int main(int argc, char const *argv[])
 		cache_sim->processOne(behavior, addr);
 	}
 	cache_sim->printRes();
+	cache_sim->writeRes(outfile);
 
 	// Close file and free memory
 	infile.close();
 	outfile.close();
 	delete cache_sim;
 
-	cout << "\nAll results have been written into file '" << argv[2] << "'" << endl;	
+	cout << "-----All results have been written into file '" << argv[2] << "'------" << endl;	
 	return 0;
 }
