@@ -18,9 +18,13 @@ Idx1 = kmeans(data,7);
 %  Decide the k to be 4 after applying PCA
 Idx2 = kmeans(r_data,4);
 
+%% Write result to files
 res = [1:527]';
 res1 = [res, Idx1];
 res2 = [res, Idx2];
+
+tabulate(Idx1)
+tabulate(Idx2)
 
 dlmwrite('result1.txt',res1, ' ');
 dlmwrite('result2.txt',res2, ' ');

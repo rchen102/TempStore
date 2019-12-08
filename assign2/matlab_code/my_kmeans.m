@@ -5,10 +5,10 @@ function [] = my_kmeans( data )
 
 n = size(data, 1);
 K = sqrt(n);
-res = [];
-k_list = [];
+res = []; % store SSE for k in range[1,K]
+
 for k = 1 : K
-    [Idx,C,sumD]=kmeans(data,k);
+    [Idx,C,sumD] = kmeans(data,k);
     e = sum(sumD);
     res = [res,e];
 end
