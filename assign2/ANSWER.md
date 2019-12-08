@@ -1,5 +1,4 @@
 # CS435: Assignment 2
-
 ## Basic Information
 Name: Renze Chen  
 B-Number: B00767193  
@@ -30,9 +29,7 @@ Utilize the elbow method to decide the k value for kmeans
 5. We can find, `SSE` decreases as `K` increases. At first, the `SSE` will decrease fast, but at some point, the decrease will be small, causing an angle in the figure. We consider the point as elbow point. And the number of cluster is chosen at the point.
 
 ## Question3
-The specific output has been writen into file `result1.txt`
-
-In summary, divide the dataset into `7` clusters:
+After applying the modified kmeans, from `figure/Fig1 Before PCA.png`, we can find the elbow point is `k=7`, so divide the dataset into `7` clusters:
 
 Value    Count   Percent
   1       21      3.98%
@@ -43,18 +40,20 @@ Value    Count   Percent
   6       60     11.39%
   7      126     23.91%
 
+The specific clustering output has been writen into file `result1.txt`
+
 ## Question4
-After applying PCA, the dimensionality of dataset was reduced from `38` to `11`, while the rest components can account for 85% of the variance
+After applying `PCA`, the dimensionality of dataset was reduced from `38` to `11`, while the rest components can account for `85%` of the variance
 
-The specific output has been writen into file `result2.txt`
-
-In summary, divide the dataset into `4` clusters:
+After applying the modified kmeans, from `figure/Fig1 After PCA.png`, we can find the elbow point is `k=4`, so divide the dataset into `4` clusters:
 
 Value    Count   Percent
   1      173     32.83%
   2       77     14.61%
   3      197     37.38%
   4       80     15.18%
+
+The specific clustering output has been writen into file `result2.txt`
 
 ## Question5
 ### Comparison
