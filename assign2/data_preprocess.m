@@ -12,4 +12,6 @@ end
 raw = raw';
 raw = mapminmax(raw, 0, 1);
 raw = raw';
+
+%% data.mat stores the data after preprocessing
 data = raw;
