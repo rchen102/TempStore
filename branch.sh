@@ -2,4 +2,4 @@
 LIB_PATH=/home/yaoliu/src_code/protobuf-java-3.7.0.jar
 
 #name port interval 
-java -classpath bin:$LIB_PATH Branch $1 $2 $3
+java -classpath bin/branch:$LIB_PATH Branch $1 $2 $3
