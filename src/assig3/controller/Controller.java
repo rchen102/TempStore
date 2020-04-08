@@ -1,4 +1,4 @@
-package controller;
+package assig3.controller;
 
 public class Controller {
     public static int total;

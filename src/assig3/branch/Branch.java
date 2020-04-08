@@ -1,4 +1,4 @@
-package branch;
+package assig3.branch;
 
 public class Branch {
     public static String name;
