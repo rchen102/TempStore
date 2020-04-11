@@ -45,6 +45,10 @@ public class MsgSender implements Runnable {
         }
 
     }
+    public int getRandInterval(){
+        Random rand = new Random();
+        return rand.nextInt(this.interval+1);
+    }
     public double getRandPercentage(){
         int min = 50;
         int max = 100;
@@ -88,8 +92,12 @@ public class MsgSender implements Runnable {
 
         System.out.println("Sender start transfer");
         try {
-            StartTransfer();
-        } catch (IOException e) {
+            while(true){
+                StartTransfer();
+                Thread.sleep(getRandInterval());
+            }
+
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
 
