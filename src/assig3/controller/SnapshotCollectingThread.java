@@ -5,11 +5,11 @@ import assig3.branch.Branch;
 import java.util.List;
 import java.util.Random;
 
-public class SnapshotProxyThread implements Runnable {
+public class SnapshotCollectingThread implements Runnable {
     private MsgSender msgSender;
     private int globalSnapshotId;
 
-    public SnapshotProxyThread(MsgSender msgSender) {
+    public SnapshotCollectingThread(MsgSender msgSender) {
         this.msgSender = msgSender;
         this.globalSnapshotId = 0;
     }

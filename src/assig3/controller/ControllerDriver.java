@@ -10,7 +10,7 @@ public class ControllerDriver {
         }
         int totalMoney = Integer.valueOf(args[0]);
         String filename = args[1];
-        MyLogger.setLoggerLevel(1);
+        MyLogger.setLoggerLevel(2);
         MyLogger.printMsg("Total money = " + totalMoney + ", filename = " + filename, 1);
         Controller controller = new Controller(totalMoney, filename);
         controller.start();

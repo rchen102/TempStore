@@ -59,7 +59,7 @@ public class MsgSender {
         if (amount <= 0) return;
         Bank.BranchMessage branchMessage = MsgBuilder.buildTransfer(this.branch.getName(), amount);
         this.sendBranchMsgTo(randBranch, branchMessage);
-        String printMessage = "[Send] "+ amount + " to " + randBranch + ", remain: "+ this.branch.getBalance();
+        String printMessage = "[Send] "+ amount + " to " + randBranch + ", now: "+ this.branch.getBalance();
         MyLogger.printMsg(printMessage,2);
         this.branch.getLock().unlock();
     }

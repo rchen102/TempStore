@@ -2,6 +2,7 @@ package assig3.branch;
 
 import assig3.msg.Bank;
 import assig3.msg.Translator;
+import assig3.util.MyLogger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,8 +63,8 @@ public class Branch {
             Bank.InitBranch initBranch = branchMessage.getInitBranch();
             this.balance = initBranch.getBalance();
             this.setBranches(Translator.bankBranchToBranch(initBranch.getAllBranchesList()));
-            Handler handler = new Handler(this);
-            new Thread(new MsgHandler(handler, controllerClient)).start();
+            MsgHandler handler = new MsgHandler(this);
+            new Thread(new HandlerThread(handler, controllerClient)).start();
 
             // Wait for other branch to connect
             this.msgSender.setControllerSocket(controllerClient);
@@ -72,12 +73,11 @@ public class Branch {
             while (numOfConn != this.branches.size()) {
                 Socket client = server.accept();
                 numOfConn++;
-                System.out.println("conn established!");
-                new Thread(new MsgHandler(handler, client)).start();
+                MyLogger.printMsg("conn established!", 1);
+                new Thread(new HandlerThread(handler, client)).start();
             }
-
             // Start transfer money
-            System.out.println("main end, conn #: " + numOfConn);
+            MyLogger.printMsg("main end, conn #: " + numOfConn, 1);
             this.msgSender.startTransfer(this.interval);
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,6 +86,7 @@ public class Branch {
 
     private void setBranches(List<Branch> branches) {
         this.branches = new ArrayList<>();
+        // Filter itself
         for(Branch branch : branches){
             if(branch.getName().equals(this.name)) continue;
             else this.branches.add(branch);
@@ -172,9 +173,10 @@ public class Branch {
         return randPercentage/1000;
     }
 
-    public boolean withdraw(int value){
-        value = -value;
-        return this.updateBalance(value);
+    public synchronized boolean withdraw(int value){
+        if (this.balance - value < 0) return false;
+        this.balance -= value;
+        return true;
     }
 
     public synchronized void addMoney(int value,String senderName){
@@ -189,15 +191,8 @@ public class Branch {
         }
     }
 
-    private synchronized boolean updateBalance(int value) {
-        if (value >= 0) {
-            this.balance += value;
-        }
-        else {
-            if(this.balance + value < 0) return false;
-            this.balance += value;
-        }
-        return true;
+    public synchronized int getBalance() {
+        return balance;
     }
 
     public void setName(String name) {
@@ -222,10 +217,6 @@ public class Branch {
 
     public String getIp() {
         return ip;
-    }
-
-    public synchronized int getBalance() {
-        return balance;
     }
 
     public List<Branch> getBranches(){return branches;}

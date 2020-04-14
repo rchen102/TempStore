@@ -17,7 +17,6 @@ public class BranchDriver {
         else{
             MyLogger.setLoggerLevel(2);
         }
-        MyLogger.setLoggerLevel(1);
         String printMessage = "name = " + name + ", port = " + port + ", interval = " + interval;
         MyLogger.printMsg(printMessage,1);
         Branch branch = new Branch(name, port, interval);

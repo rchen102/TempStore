@@ -40,7 +40,7 @@ public class MsgSender {
     }
 
     public void startCollectGlobalSnapshot() {
-        new Thread(new SnapshotProxyThread(this)).start();
+        new Thread(new SnapshotCollectingThread(this)).start();
         MyLogger.printMsg("Start collect global snapshots", 1);
     }
 
@@ -49,7 +49,6 @@ public class MsgSender {
         try {
             OutputStream os = conn.getOutputStream();
             branchMsg.writeDelimitedTo(os);
-            // os.close(); // not sure if need close stream
         } catch (IOException e) {
             e.printStackTrace();
         }
