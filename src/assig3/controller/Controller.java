@@ -1,15 +1,10 @@
 package assig3.controller;
 
 import assig3.branch.Branch;
-import assig3.msg.Bank;
-import assig3.msg.MsgBuilder;
 import assig3.util.FileProcessor;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +12,9 @@ public class Controller {
     private int totalMoney;
     private String filename;
     private List<Branch> branches;
-    private Map<String, Socket> connMap;  // <k: branchName, v: tcp conn>
+    private MsgSender msgSender;
+
+    public SnapshotCollector snapshotCollector;
 
     public Controller(int totalMoney, String filename) {
         this.totalMoney = totalMoney;
@@ -25,9 +22,26 @@ public class Controller {
     }
 
     public void start() {
+        // 1. read branch list from file
         this.initBranchList();
-        this.establishConn();
-        this.sendInitBranch();
+
+        // 2. establish duplex connection and start MsgSender, MsgHandler
+        this.msgSender = new MsgSender(this);
+        this.msgSender.establishConn();
+        this.startMsgHandlers(this.msgSender.getConnMap());
+
+        // send InitBranch
+        this.msgSender.sendInitBranch();
+
+        // start to collect global Snapshots
+        this.snapshotCollector = new SnapshotCollector(this.branches.size());
+        this.msgSender.startCollectGlobalSnapshot();
+    }
+
+    private void startMsgHandlers(Map<String, Socket> connMap) {
+        connMap.forEach((branchName, socket) -> {
+            new Thread(new MsgHandler(this, branchName, socket)).start();
+        });
     }
 
     private void initBranchList() {
@@ -41,41 +55,16 @@ public class Controller {
             String name = branchInfo[0];
             String ip = branchInfo[1];
             int port = Integer.parseInt(branchInfo[2]);
-            this.branches.add(new Branch(name, port, ip));
+            this.branches.add(new Branch(name, ip, port));
         }
         fp.closeScanner();
     }
 
-    private void establishConn() {
-        this.connMap = new HashMap<>();
-        String name;
-        String ip;
-        int port;
-        Socket socket;
-        for (Branch branch : branches) {
-            name = branch.getName();
-            ip = branch.getIp();
-            port = branch.getPort();
-            try {
-               socket = new Socket(ip, port);
-               this.connMap.put(name, socket);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public List<Branch> getBranches() {
+        return branches;
     }
 
-    private void sendInitBranch() {
-        int balance = this.totalMoney / this.branches.size();
-        Bank.BranchMessage branchMsg = MsgBuilder.buildInitBranch(balance, this.branches);
-        for (Socket conn : this.connMap.values()) {
-            try {
-                OutputStream os = conn.getOutputStream();
-                branchMsg.writeDelimitedTo(os);
-                // os.close(); // not sure if need close stream
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public int getTotalMoney() {
+        return totalMoney;
     }
 }

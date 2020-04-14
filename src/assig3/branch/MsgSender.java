@@ -1,106 +1,90 @@
 package assig3.branch;
 
-
 import assig3.msg.Bank;
 import assig3.msg.MsgBuilder;
+import assig3.util.MyLogger;
 
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class MsgSender implements Runnable {
+public class MsgSender {
     private Branch branch;
-    private int interval;
-    private List<Socket> outgoingChannels;
+    private Map<String, Socket> outgoingChannels;
+    private Socket controllerSocket;
 
-    public MsgSender(Branch branch, int interval) {
+    MsgSender(Branch branch){
         this.branch = branch;
-        this.interval = interval;
-    }
-
-    public void StartTransfer() throws IOException {
-        int balance = branch.getBalance();
-        int transferAmount = 0;
-
-        double randPercentage = getRandPercentage();
-        int randBranch = getRandBranch(branch.getBranches().size());
-
-       // Bank.Transfer.Builder transferMsgBuilder = Bank.Transfer.newBuilder();
-
-        //1: calculate amount for transfer
-        //2: wrap up transfer message
-        //3: get target socket from randomly selected branch in all out going channels
-        //4: decrease self balance then send out the transfer message
-        transferAmount = (int)(balance*randPercentage);
-        //System.out.println("Random percentage: "+randPercentage + ", Random branch: "+ randBranch);
-
-        if(branch.withdraw(transferAmount)){
-            Bank.BranchMessage branchMessage = MsgBuilder.buildTransfer(branch.getName(),transferAmount);
-            System.out.println("[Send] "+ transferAmount+", "+branch.getBranches().get(randBranch).getName()+", "+balance+", "+branch.getBalance());
-            branchMessage.writeDelimitedTo(outgoingChannels.get(randBranch).getOutputStream());
-        }
-        else{
-            System.out.println("Transfer amount greater than balance, invalid transaction, abort!");
-        }
-
-    }
-    public int getRandInterval(){
-        Random rand = new Random();
-        return rand.nextInt(this.interval+1);
-    }
-    public double getRandPercentage(){
-        int min = 50;
-        int max = 100;
-
-        //Transfer random amount of money, in range of [0.05,0.10]
-        //Check before transfer, transfer amount is round up!
-        double randPercentage = Math.random()*((max-min)+1)+min;
-        return randPercentage/1000;
-    }
-
-    public int getRandBranch(int size){
-        //select Random Branch;
-        Random rand = new Random();
-        int randBranch = rand.nextInt(branch.getBranches().size());
-        return randBranch;
+        outgoingChannels = new HashMap<>();
     }
 
     public void establishOutgoingChannels(){
-        outgoingChannels = new ArrayList<>();
-        for(Branch branch : branch.getBranches()){
+        outgoingChannels = new HashMap<>();
+        for(Branch b : branch.getBranches()){
             try {
-                Socket outgoingSocket = new Socket(branch.getIp(),branch.getPort());
-                outgoingChannels.add(outgoingSocket);
+                Socket outgoingSocket = new Socket(b.getIp(),b.getPort());
+                outgoingChannels.put(b.getName(),outgoingSocket);
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-    @Override
-    public void run() {
-        while(!branch.isInit())
+
+    public void startTransfer(int interval){
+        new Thread(new SendMoneyThread(this, interval)).start();
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    private void sendBranchMsgTo(String branchName, Bank.BranchMessage branchMsg) {
+        Socket conn = this.outgoingChannels.get(branchName);
         try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
+            OutputStream os = conn.getOutputStream();
+            branchMsg.writeDelimitedTo(os);
+            // os.close(); // not sure if need close stream
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("sender awake,establish out going channels");
+    }
 
-        establishOutgoingChannels();
+    public void sendTransfer(String randBranch) {
+        this.branch.getLock().lock();
+        int amount = this.branch.randomTransfer();
+        if (amount <= 0) return;
+        Bank.BranchMessage branchMessage = MsgBuilder.buildTransfer(this.branch.getName(), amount);
+        this.sendBranchMsgTo(randBranch, branchMessage);
+        String printMessage = "[Send] "+ amount + " to " + randBranch + ", remain: "+ this.branch.getBalance();
+        MyLogger.printMsg(printMessage,2);
+        this.branch.getLock().unlock();
+    }
 
-        System.out.println("Sender start transfer");
-        try {
-            while(true){
-                StartTransfer();
-                Thread.sleep(getRandInterval());
-            }
+    public void sendMarker(int snapShotId, String targetBranchName) throws IOException {
+        Bank.BranchMessage markerMessage = MsgBuilder.buildMarker(this.branch.getName(),snapShotId);
+        markerMessage.writeDelimitedTo(outgoingChannels.get(targetBranchName).getOutputStream());
+        String printMessage = "<SendMarker> id: " + snapShotId + ", to: " + targetBranchName;
+        MyLogger.printMsg(printMessage,1);
+    }
 
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void sendReturnSnapshot(int snapShotId, List<Integer> record,int balance) throws IOException {
+        Bank.BranchMessage returnMessage = MsgBuilder.buildReturnSnapshot(snapShotId,record,balance);
+        returnMessage.writeDelimitedTo(controllerSocket.getOutputStream());
+        String printMessage = ("<SendReturnSnapshot> id: " + snapShotId);
+        MyLogger.printMsg(printMessage,1);
+    }
 
+    public Map<String, Socket> getOutgoingChannels() {
+        return outgoingChannels;
+    }
 
+    public void setControllerSocket(Socket controllerSocket) {
+        this.controllerSocket = controllerSocket;
     }
 }
+
+

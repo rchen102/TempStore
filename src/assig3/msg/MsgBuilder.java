@@ -50,9 +50,15 @@ public class MsgBuilder {
         return branchMsg.build();
     }
 
-    public static Bank.BranchMessage buildReturnSnapshot() {
+    public static Bank.BranchMessage buildReturnSnapshot(int snapshotId,List<Integer>res,int balance) {
         Bank.BranchMessage.Builder branchMsg = Bank.BranchMessage.newBuilder();
-        // TODO wait until snapshot related part done
-        return  branchMsg.build();
+        Bank.ReturnSnapshot.Builder returnSnapshot = Bank.ReturnSnapshot.newBuilder();
+        Bank.ReturnSnapshot.LocalSnapshot.Builder localSnapshot = Bank.ReturnSnapshot.LocalSnapshot.newBuilder();
+        localSnapshot.setBalance(balance);
+        localSnapshot.setSnapshotId(snapshotId);
+        localSnapshot.addAllChannelState(res);
+        returnSnapshot.setLocalSnapshot(localSnapshot.build());
+        branchMsg.setReturnSnapshot(returnSnapshot.build());
+        return branchMsg.build();
     }
 }
